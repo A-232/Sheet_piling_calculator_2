@@ -1,0 +1,27 @@
+
+name: Сборка Sheet_piling_calculator_2
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Скачиваем код
+        uses: actions/checkout@v4
+
+      - name: Настраиваем CMake
+        run: cmake -B build -S .
+
+      - name: Собираем проект
+        run: cmake --build build --config Release
+
+      - name: Сохраняем exe файл
+        uses: actions/upload-artifact@v4
+        with:
+          name: Sheet_piling_calculator_2-EXE
+          path: build/Release/Sheet_piling_calculator_2.exe
+          retention-days: 16
